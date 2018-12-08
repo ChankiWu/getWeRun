@@ -67,7 +67,7 @@ Page({
       success: function (resLogin) {
         if (resLogin.code) {
           wx.request({
-            url: 'http://localhost:3000/login',
+            url: 'https://797afe50.ngrok.io/login',
             data: {
               code: resLogin.code
             },
@@ -80,9 +80,6 @@ Page({
               //2,getUserinfo
               wx.getSetting({
                 success: function (res) {
-                  if (!res.authSetting['scope.werun']) {
-                  }
-                  else {
 
                     wx.getWeRunData({
                       success(resRun) {
@@ -105,6 +102,16 @@ Page({
                         mythis.setData({
                           run: runData.stepInfoList
                         })
+
+                        wx.request({
+                          url: 'https://797afe50.ngrok.io/result',
+                          data:{
+                            result: runData.stepInfoList
+                          },
+                          success: function(response){
+                            console.log("Done.", response);
+                          }
+                        })
                       },
 
                       fail: function (res) {
@@ -117,8 +124,6 @@ Page({
                       }
 
                     })  //getrundata
-
-                  }
 
                 }
 

@@ -41,6 +41,13 @@ app.get('/login', function (req, res) {
 
 })
 
+app.get('/result', function (req, res) {
+
+    console.log(req.query.result);
+    res.send("OK");
+    
+})
+
 var server = app.listen(3000, function () {
  
   var host = server.address().address
