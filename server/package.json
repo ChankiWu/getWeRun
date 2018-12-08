@@ -1,0 +1,10 @@
+{
+    "name": "wechat-server",
+    "description": "wechat miniprogram server",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "4.x",
+        "request": "^2.88.0"
+    }
+}
