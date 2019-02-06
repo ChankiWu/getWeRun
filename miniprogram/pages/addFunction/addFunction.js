@@ -36,38 +36,13 @@ Page({
     })
   },
 
-  testFunction() {
-    wx.cloud.callFunction({
-      name: 'sum',
-      data: {
-        a: 1,
-        b: 2
-      },
-      success: res => {
-        wx.showToast({
-          title: '调用成功',
-        })
-        this.setData({
-          result: JSON.stringify(res.result)
-        })
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '调用失败',
-        })
-        console.error('[云函数] [sum] 调用失败：', err)
-      }
-    })
-  },
-
   getWerun(){
     var mythis = this;
     wx.login({
       success: function (resLogin) {
         if (resLogin.code) {
           wx.request({
-            url: 'http://localhost:3000/login',
+            url: 'http://192.168.0.6:3000/login',
             data: {
               code: resLogin.code
             },
@@ -104,7 +79,7 @@ Page({
                         })
 
                         wx.request({
-                          url: 'http://localhost:3000/result',
+                          url: 'http://192.168.0.6:3000/result',
                           data:{
                             result: runData.stepInfoList
                           },

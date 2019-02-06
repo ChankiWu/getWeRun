@@ -1,4 +1,7 @@
 //index.js
+const appid = "wxe89011b6aaa0836e";
+const secretkey = "954a3b6622b1579457a633a51cc15202";
+const WXBizDataCrypt = require('../../utils/decode.js');
 const app = getApp()
 
 Page({
@@ -9,6 +12,7 @@ Page({
     takeSession: false,
     requestResult: ''
   },
+
 
   onLoad: function() {
     if (!wx.cloud) {
@@ -46,75 +50,80 @@ Page({
     }
   },
 
-  onGetOpenid: function() {
-    // 调用云函数
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
-        wx.navigateTo({
-          url: '../userConsole/userConsole',
-        })
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
-        wx.navigateTo({
-          url: '../deployFunctions/deployFunctions',
-        })
+  getWerun() {
+    var mythis = this;
+    wx.login({
+      success: function (resLogin) {
+        if (resLogin.code) {
+          wx.request({
+            url: 'http://192.168.0.6:3000/login',
+            data: {
+              code: resLogin.code
+            },
+            fail: function (message) {
+              console.log("fail to get response from nodejs server" + message);
+            },
+            success: function (resSession) {
+              console.log("Session", resSession.data);
+
+              //getUserinfo
+              wx.getSetting({
+                success: function (res) {
+
+                  wx.getWeRunData({
+                    success(resRun) {
+                      const encryptedData = resRun.encryptedData;
+                      const iv = resRun.iv
+                      console.info(resRun);
+
+                      //解密数据
+                      var pc = new WXBizDataCrypt(appid, resSession.data);
+                      console.log(pc);
+                      var runData = pc.decryptData(encryptedData, iv);
+
+                      //简单处理一下
+                      for (var i in runData.stepInfoList) {
+                        runData.stepInfoList[i].date = new Date(runData.stepInfoList[i].timestamp * 1000).toLocaleDateString()
+                      }
+
+                      console.log(runData.stepInfoList);
+
+                      mythis.setData({
+                        run: runData.stepInfoList
+                      })
+
+                      wx.request({
+                        url: 'http://192.168.0.6:3000/result',
+                        data: {
+                          result: runData.stepInfoList
+                        },
+                        success: function (response) {
+                          console.log("Done.", response);
+                        }
+                      })
+                    },
+
+                    fail: function (res) {
+                      wx.showModal({
+                        title: '提示',
+                        content: '开发者未开通微信运动，请关注“微信运动”公众号后重试',
+                        showCancel: false,
+                        confirmText: '知道了'
+                      })
+                    }
+
+                  })  //getrundata
+
+                }
+
+              })
+
+            },
+
+          })  //request
+        }
       }
-    })
-  },
-
-  // 上传图片
-  doUpload: function () {
-    // 选择图片
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-
-        wx.showLoading({
-          title: '上传中',
-        })
-
-        const filePath = res.tempFilePaths[0]
-        
-        // 上传图片
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
-
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-            
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
-            })
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
-
-      },
-      fail: e => {
-        console.error(e)
-      }
-    })
-  },
+    })  //login
+  }
 
 })
