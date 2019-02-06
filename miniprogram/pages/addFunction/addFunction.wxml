@@ -21,7 +21,7 @@
   </view>
 
   <view class="guide">
-    <text class="headline">新增云函数</text>
+    <text class="headline">新增云</text>
     <text class="p">1. 在云函数根目录 cloudfunctions 上右键选择新建云函数，命名为 sum</text>
     <text class="p">2. 在创建的 cloudfunctions/sum/index.js 文件中添加如下代码</text>
     <image class="image1" src="../../images/code-func-sum.png" mode="aspectFit"></image>
