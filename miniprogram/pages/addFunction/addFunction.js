@@ -67,7 +67,7 @@ Page({
       success: function (resLogin) {
         if (resLogin.code) {
           wx.request({
-            url: 'https://797afe50.ngrok.io/login',
+            url: 'http://localhost:3000/login',
             data: {
               code: resLogin.code
             },
@@ -77,7 +77,7 @@ Page({
             success: function (resSession) {
               console.log("Session", resSession.data);
 
-              //2,getUserinfo
+              //getUserinfo
               wx.getSetting({
                 success: function (res) {
 
@@ -87,7 +87,7 @@ Page({
                         const iv = resRun.iv
                         console.info(resRun);
 
-                        //3、解密步骤2的数据
+                        //解密数据
                         var pc = new WXBizDataCrypt(appid, resSession.data);
                         console.log(pc);
                         var runData = pc.decryptData(encryptedData, iv);
@@ -104,7 +104,7 @@ Page({
                         })
 
                         wx.request({
-                          url: 'https://797afe50.ngrok.io/result',
+                          url: 'http://localhost:3000/result',
                           data:{
                             result: runData.stepInfoList
                           },
