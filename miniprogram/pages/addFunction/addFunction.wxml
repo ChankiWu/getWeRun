@@ -3,10 +3,11 @@
 
   <view class="list">
 
-    <view class="list-item" bindtap="getWerun">
+   <!-- <view class="list-item" bindtap="getWerun">
       <text>获取运动数据</text>
     </view>
-
+    -->
+    
     <view class="list-item" wx:for="{{run}}">
       <view class="viewitems">{{item.date}}</view>
       <view class="viewitems">{{item.step}}</view>

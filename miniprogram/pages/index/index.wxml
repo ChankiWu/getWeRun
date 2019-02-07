@@ -2,22 +2,12 @@
 <view class="container">
 
   <!-- 获取Werun过去30天数据 -->
- <!-- <view class="uploader">
+ <view class="uploader">
     <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
-      <text>点我</text>
+      <text bindtap="getit">点我</text>
    </navigator>
   </view>
-  -->
-  
-   <view class="uploader">
- <navigator url="../addFunction/addFunction" class="uploader-text" bindtap="getWerun">
-      <text class="list-item">获取运动数据</text>
-    </navigator>
-  <view class="list-item" wx:for="{{run}}">
-      <view class="viewitems">{{item.date}}</view>
-      <view class="viewitems">{{item.step}}</view>
-    </view>
-    </view>
+
 
   <view class="uploader">
     <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
