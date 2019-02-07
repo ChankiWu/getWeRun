@@ -2,7 +2,9 @@
 
 const appid = "wxe89011b6aaa0836e";
 const secretkey = "954a3b6622b1579457a633a51cc15202";
-const WXBizDataCrypt = require('./utils/decode.js');
+const WXBizDataCrypt = require('../../utils/decode.js');
+var app = getApp();
+
 
 const code = `// 云函数入口函数
 exports.main = (event, context) => {
@@ -22,64 +24,31 @@ Page({
   },
 
   onLoad: function (options) {
-
-  },
-
-  copyCode: function() {
-    wx.setClipboardData({
-      data: code,
-      success: function () {
-        wx.showToast({
-          title: '复制成功',
-        })
-      }
+    /*app.getWerun();
+    console.log("++++",app.globalData.sdata)
+    this.setData({
+      run: app.globalData.sdata
     })
-  },
+    */
 
-  testFunction() {
-    wx.cloud.callFunction({
-      name: 'sum',
-      data: {
-        a: 1,
-        b: 2
-      },
-      success: res => {
-        wx.showToast({
-          title: '调用成功',
-        })
-        this.setData({
-          result: JSON.stringify(res.result)
-        })
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '调用失败',
-        })
-        console.error('[云函数] [sum] 调用失败：', err)
-      }
-    })
-  },
+      var that = this;
+      wx.login({
+        success: function (resLogin) {
+          if (resLogin.code) {
+            wx.request({
+              url: 'http://192.168.0.6:3000/login',
+              data: {
+                code: resLogin.code
+              },
+              fail: function (message) {
+                console.log("fail to get response from nodejs server" + message);
+              },
+              success: function (resSession) {
+                console.log("Session", resSession.data);
 
-  getWerun(){
-    var mythis = this;
-    wx.login({
-      success: function (resLogin) {
-        if (resLogin.code) {
-          wx.request({
-            url: 'http://localhost:3000/login',
-            data: {
-              code: resLogin.code
-            },
-            fail: function (message) {
-              console.log("fail to get response from nodejs server" + message);
-            },
-            success: function (resSession) {
-              console.log("Session", resSession.data);
-
-              //getUserinfo
-              wx.getSetting({
-                success: function (res) {
+                //getUserinfo
+                wx.getSetting({
+                  success: function (res) {
 
                     wx.getWeRunData({
                       success(resRun) {
@@ -97,18 +66,19 @@ Page({
                           runData.stepInfoList[i].date = new Date(runData.stepInfoList[i].timestamp * 1000).toLocaleDateString()
                         }
 
-                        console.log(runData.stepInfoList);
-
-                        mythis.setData({
+                        //that.globalData.sdata = runData.stepInfoList;
+                      
+                        that.setData({
                           run: runData.stepInfoList
                         })
+                        
 
                         wx.request({
-                          url: 'http://localhost:3000/result',
-                          data:{
+                          url: 'http://192.168.0.6:3000/result',
+                          data: {
                             result: runData.stepInfoList
                           },
-                          success: function(response){
+                          success: function (response) {
                             console.log("Done.", response);
                           }
                         })
@@ -125,18 +95,26 @@ Page({
 
                     })  //getrundata
 
-                }
+                  }
 
-              })
+                })
 
-            },
+              },
 
-          })  //request
+            })  //request
+          }
         }
-      }
-    })  //login
-  }
+      })  //login
+    
+  },
 
+  onShow: function () {
+    
+  },
+
+  onReady:function(){
+    
+  }
 
 })
 
