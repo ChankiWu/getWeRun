@@ -24,12 +24,6 @@ Page({
   },
 
   onLoad: function (options) {
-    /*app.getWerun();
-    console.log("++++",app.globalData.sdata)
-    this.setData({
-      run: app.globalData.sdata
-    })
-    */
 
       var that = this;
       wx.login({

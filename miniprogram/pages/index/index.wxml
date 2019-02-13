@@ -4,14 +4,14 @@
   <!-- 获取Werun过去30天数据 -->
  <view class="uploader">
     <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
-      <text bindtap="getit">点我</text>
+      <text>点我</text>
    </navigator>
   </view>
 
 
   <view class="uploader">
-    <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
-      <text>答题</text>
+    <navigator url="../sportpk/sportpk" open-type="navigate" class="uploader-text">
+      <text>PK</text>
    </navigator>
   </view>
 

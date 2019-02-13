@@ -1,6 +1,4 @@
 //index.js
-const appid = "wxe89011b6aaa0836e";
-const secretkey = "954a3b6622b1579457a633a51cc15202";
 const WXBizDataCrypt = require('../../utils/decode.js');
 const app = getApp();
 
