@@ -7,6 +7,7 @@ import loginsource from "../../api/loginSource"
 import regeneratorRuntime from '../../packages/regenerator/runtime'
 import date from "../../utils/date"
 const app = getApp()
+
 Page({
 
   /**
@@ -32,6 +33,7 @@ Page({
     })
   },
 
+  //刷新群内pk
   getfirstgroupsport: async function () {
     var that = this;
     let openGidlist = wx.getStorageSync('openGidlist');
@@ -42,6 +44,7 @@ Page({
           console.log("\nfirstgroup",data);
           let sharegroupdata = that.data.sharegroupdata;
           sharegroupdata.push(data.data.rows);
+          console.log("sharegroupdata", sharegroupdata);
           that.setData({ sharegroupdata: sharegroupdata })
         }
 
@@ -188,15 +191,16 @@ Page({
     setTimeout(function () {
       if (app.globalData.shareTicket != undefined || app.globalData.shareTicket != null) {
         console.log("--------------------");
-        console.log("shareTicket" + app.globalData.shareTicket);
+        console.log("shareTicket: " + app.globalData.shareTicket);
         console.log("--------------------");
         wx.getShareInfo({
           shareTicket: app.globalData.shareTicket,
           success: function (res) {
             var encryptedData = res.encryptedData;
             var iv = res.iv;
-            console.log(encryptedData + iv);
+            //console.log(encryptedData + iv);
             let session_key = wx.getStorageSync("session_key");
+
             sportsource.getsportdata(res, session_key).then(function (data) {
               console.log(data);
               let openGid = data.data.openGId;
@@ -303,14 +307,13 @@ Page({
                 })
                 return
               }
-              if (avatarUrl == undefined || avatarUrl == null || nickname == undefined || nickname == null) {
+              if (avatarUrl == undefined || avatarUrl == null || nickname == undefined || nickname == null)               {
                 wx.showToast({
                   title: '请先点击头像登录',
                   duration: 2000
                 })
                 return
               }
-
 
               // let openGidlist = that.data.openGidlist;
               let openGidlist = wx.getStorageSync('openGidlist');

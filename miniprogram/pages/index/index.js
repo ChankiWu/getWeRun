@@ -1,5 +1,4 @@
 //index.js
-const WXBizDataCrypt = require('../../utils/decode.js');
 const app = getApp();
 
 Page({
