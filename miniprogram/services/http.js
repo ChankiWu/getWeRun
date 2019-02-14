@@ -9,7 +9,7 @@ import regeneratorRuntime from '../packages/regenerator/runtime'
 import WXP from '../packages/api-promise/wxp'
 import { URL } from '../packages/url/url'
 
-const DOMAIN = "localhost:3000"
+const DOMAIN = "192.168.0.6:3000"
 const SCHEME = "http://"
 const HEADERS = {}
 
