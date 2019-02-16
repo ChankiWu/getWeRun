@@ -42,8 +42,11 @@ Page({
         for (let i in openGidlist.Gidlist) {
           let data = await sportsource.getgroupsport(openGidlist.Gidlist[i]);
           console.log("\nfirstgroup",data);
+          //that.data is the data {} above, initial data
           let sharegroupdata = that.data.sharegroupdata;
-          sharegroupdata.push(data.data.rows);
+          console.log("length is", data.rows.length);
+          sharegroupdata.push(data.rows);
+          //sharegroupdata.push(data.data.rows);
           console.log("sharegroupdata", sharegroupdata);
           that.setData({ sharegroupdata: sharegroupdata })
         }
@@ -133,33 +136,19 @@ Page({
     that.getfirstgroupsport();
 
     //当天步数获取
-    wx.login({
-      success(res) {
-        console.log('code: ' + res.code);
-        if (res.code) {
-          loginsource.login(res.code).then(function (data) {
-            console.log('session_key: ' + data.session_key);
+    wx.getWeRunData({
+      success: function (res) {
+        console.log(res);
+        let session_key = wx.getStorageSync("session_key");
+        console.log(session_key);
+        sportsource.getsportdata(res, session_key).then(function (data) {
+          console.log(data);
+          that.setData({ todaysportcount: data.data.stepInfoList[30].step });
+        })
 
-              wx.getSetting({
-                success: function (res) {
-                  wx.getWeRunData({
-                    success: function (res) {
-                      let session_key = data.session_key
-                      sportsource.getsportdata(res, session_key).then(function (data) {
-                        that.setData({ todaysportcount: data.data.stepInfoList[30].step });
-                      })
-                    }
-                  })
-                }
-              })
-
-            })
-        }
       }
     })
         
-
-
     var that = this;
     if (app.globalData.userInfo) {
       this.setData({
@@ -202,7 +191,7 @@ Page({
             let session_key = wx.getStorageSync("session_key");
 
             sportsource.getsportdata(res, session_key).then(function (data) {
-              console.log(data);
+              console.log("getsportdata",data);
               let openGid = data.data.openGId;
               that.setData({ openGid: openGid });
               let openid = that.data.openid;

@@ -14,6 +14,9 @@ const appid = "wxe89011b6aaa0836e";
 const secretkey = "954a3b6622b1579457a633a51cc15202";
 const WXBizDataCrypt = require('./WXBizDataCrypt');
 
+var person_Gid = "";
+var group_person_info = new Array();
+
 app.get('/', function (req, res) {
    res.send('This is weChat Server');
 })
@@ -95,22 +98,37 @@ app.get('/opendata/getsportdata', function(req, res){
         show_rundata.push(runData.stepInfoList[i].step,runData.stepInfoList[i].date);
     }
 
-    //console.log(show_rundata);
+    //console.log(result, show_rundata);
     res.send(result);
 })
 
 app.post('/groupsport/creategroupsport', function(req, res){
     console.log("\n[Post] /groupsport/creategroupsport");
-    console.log(req.body);
+    person_Gid = req.body.openGid;
+    var flag = true;
+    for (var j=0;j<group_person_info.length;j++){
+        if(group_person_info[j].openid == req.body.openid)
+            flag = false;
+    }
+    if(flag){
+        group_person_info.push(req.body); 
+    }
 
+    console.log(group_person_info);
     res.send(true);
 })
 
 app.get('/groupsport/getgroupsport', function(req, res){
-    console.log("\n[Get] /groupsport/getgroupsport");
-    var result = {data: req.query.openGid};
-    
-    res.send(result);
+    console.log("\n[Get] /groupsport/getgroupsport", req.query);
+    if(req.query.openGid == person_Gid){
+        //match the person to this group
+        var result = {rows: group_person_info};
+        res.send(result);
+    }
+    else{
+        var result = {data: req.query.openGid};
+        res.send(result);
+    }
 })
 
 
