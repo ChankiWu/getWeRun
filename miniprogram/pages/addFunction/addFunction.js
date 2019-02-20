@@ -2,9 +2,9 @@
 
 const appid = "wxe89011b6aaa0836e";
 const secretkey = "954a3b6622b1579457a633a51cc15202";
-const WXBizDataCrypt = require('../../utils/decode.js');
-var app = getApp();
 
+var app = getApp();
+const domain = "http://192.168.0.6:3000/";
 
 const code = `// 云函数入口函数
 exports.main = (event, context) => {
@@ -30,7 +30,7 @@ Page({
         success: function (resLogin) {
           if (resLogin.code) {
             wx.request({
-              url: 'http://192.168.0.6:3000/login',
+              url: domain + 'login',
               data: {
                 code: resLogin.code
               },
@@ -46,36 +46,30 @@ Page({
 
                     wx.getWeRunData({
                       success(resRun) {
-                        const encryptedData = resRun.encryptedData;
-                        const iv = resRun.iv
-                        console.info(resRun);
-
-                        //解密数据
-                        var pc = new WXBizDataCrypt(appid, resSession.data);
-                        console.log(pc);
-                        var runData = pc.decryptData(encryptedData, iv);
-
-                        //简单处理一下
-                        for (var i in runData.stepInfoList) {
-                          runData.stepInfoList[i].date = new Date(runData.stepInfoList[i].timestamp * 1000).toLocaleDateString()
-                        }
-
-                        //that.globalData.sdata = runData.stepInfoList;
-                      
-                        that.setData({
-                          run: runData.stepInfoList
-                        })
-                        
 
                         wx.request({
-                          url: 'http://192.168.0.6:3000/result',
+                          url: domain + 'result',
                           data: {
-                            result: runData.stepInfoList
+                            encryptedData: resRun.encryptedData,
+                            iv: resRun.iv,
+                            session_key: resSession.data
                           },
                           success: function (response) {
-                            console.log("Done.", response);
+
+                            var run_data = new Array();
+                            //简单处理一下
+                            for (var i in response.data.data.stepInfoList) {
+                              run_data.push("时间："+response.data.data.stepInfoList[i].date+ " 步数：" + response.data.data.stepInfoList[i].step)
+                            }
+
+                            console.log("Done.", run_data);
+                            that.setData({
+                              run: run_data
+                            })
+
                           }
                         })
+                        
                       },
 
                       fail: function (res) {

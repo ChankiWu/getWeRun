@@ -9,8 +9,7 @@
     -->
     
     <view class="list-item" wx:for="{{run}}">
-      <view class="viewitems">{{item.date}}</view>
-      <view class="viewitems">{{item.step}}</view>
+      <view class="viewitems">{{item}}</view>
     </view>
   </view>
 
