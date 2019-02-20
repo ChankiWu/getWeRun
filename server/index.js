@@ -72,8 +72,29 @@ app.get('/login/login', function (req, res) {
 
 app.get('/result', function (req, res) {
 
-    console.log(req.query.result);
-    res.send("OK");
+    console.log("\n" + "[GET] result request");
+    var session_key = req.query.session_key;
+    var encryptedData = req.query.encryptedData;
+    var iv = req.query.iv;
+
+    //解密运动数据
+    var pc = new WXBizDataCrypt(appid, session_key);
+    var runData = pc.decryptData(encryptedData, iv);
+    
+    var result = {data: runData};
+
+    var show_rundata = [];
+    //add date
+    for (var i in runData.stepInfoList) {
+        runData.stepInfoList[i].date = new Date(runData.stepInfoList[i].timestamp * 1000).toLocaleDateString()
+    }
+
+    for (var i in runData.stepInfoList) {
+        show_rundata.push(runData.stepInfoList[i].date,runData.stepInfoList[i].step);
+    }
+
+    console.log(show_rundata);
+    res.send(result);
     
 })
 
