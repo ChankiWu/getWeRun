@@ -4,7 +4,7 @@ const appid = "wxe89011b6aaa0836e";
 const secretkey = "954a3b6622b1579457a633a51cc15202";
 
 var app = getApp();
-const domain = "http://192.168.0.6:3000/";
+const domain = "http://52.40.139.185:3000/";
 
 const code = `// 云函数入口函数
 exports.main = (event, context) => {

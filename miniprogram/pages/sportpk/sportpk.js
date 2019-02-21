@@ -191,7 +191,6 @@ Page({
             let session_key = wx.getStorageSync("session_key");
 
             sportsource.getsportdata(res, session_key).then(function (data) {
-              console.log("getsportdata",data);
               let openGid = data.data.openGId;
               that.setData({ openGid: openGid });
               let openid = that.data.openid;
