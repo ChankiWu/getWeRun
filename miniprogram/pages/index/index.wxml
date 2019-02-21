@@ -1,20 +1,18 @@
 <!--index.wxml-->
-<view class="container">
+<view class="content">
 
   <!-- 获取Werun过去30天数据 -->
- <view class="uploader">
+<view class="button-sp-area">
     <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
-      <text>点我</text>
+      <view class="circle">点我看步数</view>
    </navigator>
-  </view>
+   
 
-
-  <view class="uploader">
     <navigator url="../sportpk/sportpk" open-type="navigate" class="uploader-text">
-      <text>PK</text>
+      <view class="circle">与好友PK</view>
    </navigator>
-  </view>
 
+  </view>
 </view>
 
   
