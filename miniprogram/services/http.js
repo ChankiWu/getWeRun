@@ -2,7 +2,7 @@ import regeneratorRuntime from '../packages/regenerator/runtime'
 import WXP from '../packages/api-promise/wxp'
 import { URL } from '../packages/url/url'
 
-const DOMAIN = "52.40.139.185:3000"
+const DOMAIN = "52.40.139.185"
 const SCHEME = "http://"
 const HEADERS = {}
 
@@ -47,11 +47,13 @@ const request = async (req = {}) => {
       return res;
     }
   },function(res){
+    /*
     wx.showToast({
       icon: 'none',
       title: "网络请求有问题，请检查网络",
       duration: 3000
     })
+    */
   })
 }
 
