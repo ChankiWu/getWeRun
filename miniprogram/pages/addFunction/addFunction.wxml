@@ -1,6 +1,5 @@
 <!--pages/addFunction/addFunction.wxml-->
 <view class="container">
-
   <view class="list">
 
    <!-- <view class="list-item" bindtap="getWerun">

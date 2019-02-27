@@ -13,6 +13,8 @@ Page({
     run: []
   },
 
+  
+
   onLoad: function (options) {
       wx.cloud.init();
       var that = this;
@@ -32,9 +34,22 @@ Page({
             }).then(res => {
               console.log("Session_key ", res.result.session_key);
               var session_key = res.result.session_key;
+
               //getUserinfo
               wx.getSetting({
                 success: function (res) {
+                  if(!res.authSetting['scope.werun']){
+                    console.log("no auth!");
+                    wx.authorize({
+                      scope: 'scope.werun',
+                      success(){
+                        console.log("need auth success");
+                      },
+                      fail(){
+                        console.log("need auth fail");
+                      }
+                    })
+                  }
                   //先确定用户是谁
                   wx.getUserInfo({
                     success: user_res => {
@@ -79,6 +94,13 @@ Page({
                     },
                     fail: err =>{
                       console.log("Error to get user info");
+
+                      wx.showModal({
+                        title: '提示',
+                        content: '获取用户信息失败，请确认授权',
+                        showCancel: false,
+                        confirmText: '知道了'
+                      })
                     }
                   })//getuserinfo
              
@@ -90,7 +112,8 @@ Page({
           }
         }
       })//login
-           
+
+
   },
 
   onShow: function () {

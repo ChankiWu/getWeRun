@@ -6,12 +6,15 @@
     <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
       <view class="circle">点我看步数</view>
    </navigator>
-   
 
+    <button open-type="share" class="weui-btn weui-btn_plain-primary">分享 </button>
+   
+   <!--
     <navigator url="../sportpk/sportpk" open-type="navigate" class="uploader-text">
       <view class="circle">与好友PK</view>
    </navigator>
-
+   -->
+   
   </view>
 </view>
 

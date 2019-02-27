@@ -17,6 +17,6 @@ page {
   justify-content: center;
   font-weight: bold;
   font-size: x-large;
-  margin-left: 20%;
-  margin-top:5%
+  margin: auto;
+
 }

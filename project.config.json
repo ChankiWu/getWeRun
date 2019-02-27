@@ -43,7 +43,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
@@ -56,6 +56,31 @@
 						"shareName": "R-dYqYj_wMPSnaKdbhxllj6jxby4qrLwvUv6QbAek3c@cr4dev",
 						"shareKey": "01cI8iwKoNtSKYB1iG5ueuPyYDDtXq2iAY1W43nd4lClj35O7VyIF-fklHR-vkQkj4ag6s0FxpGhpM3mU4K3Bw~~"
 					}
+				},
+				{
+					"id": -1,
+					"name": "1",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": 1044,
+					"shareInfo": {
+						"groupName": "测试模拟群0",
+						"shareName": "2l4NFMonscGuMPbndwjfSgcN1C33ILwJk1aO4xKzEg0@cr4dev",
+						"shareKey": "1OQ9WRjSQXiU_1eUzZzMrgV13TYzZzqhBykX-lheYdHKElwmRs5h2DutpajI9HjhkBGNHwaEkw5Sf_ikWBaVog~~"
+					}
+				},
+				{
+					"id": -1,
+					"name": "1",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": 1005
+				},
+				{
+					"id": -1,
+					"name": "1",
+					"pathName": "pages/index/index",
+					"scene": 1007
 				}
 			]
 		}
