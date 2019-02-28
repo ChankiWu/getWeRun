@@ -1,15 +1,16 @@
 <!--pages/addFunction/addFunction.wxml-->
 <view class="container">
-  <view class="list">
 
-   <!-- <view class="list-item" bindtap="getWerun">
-      <text>获取运动数据</text>
-    </view>
-    -->
-    
-    <view class="list-item" wx:for="{{run}}">
-      <view class="viewitems">{{item}}</view>
-    </view>
+  <view class='head' >
+  <button class='buttonhide' wx:if="{{!hasUserInfo}}"> 
+<image src="../../assets/tx.png" class='userinfo-avatar-replace'  mode="cover"></image>
+  </button>
+
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <view class="userinfo-nickname white text-deal">{{userInfo.nickName}}</view>
+    </block>
+    <view class='count white center'>您今天已经运动了{{todaysportcount}}步！</view>
   </view>
 
 </view>

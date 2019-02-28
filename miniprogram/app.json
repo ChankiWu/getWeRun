@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/addFunction/addFunction",
-    "pages/chooseLib/chooseLib",
     "pages/sportpk/sportpk"
   ],
   "window": {

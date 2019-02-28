@@ -2,6 +2,7 @@ import regeneratorRuntime from '../packages/regenerator/runtime'
 import WXP from '../packages/api-promise/wxp'
 import { URL } from '../packages/url/url'
 
+// AWS
 const DOMAIN = "52.40.139.185"
 const SCHEME = "http://"
 const HEADERS = {}
