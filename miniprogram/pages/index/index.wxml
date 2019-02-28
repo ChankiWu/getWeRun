@@ -4,10 +4,10 @@
   <!-- 获取Werun过去30天数据 -->
 <view class="button-sp-area">
     <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
-      <view class="circle">点我看步数</view>
+      <button open-type="getUserInfo" class="circle" bindgetuserinfo="bindGetUserInfo">点我看步数</button>
    </navigator>
 
-    <button open-type="share" class="weui-btn weui-btn_plain-primary">分享 </button>
+    <button open-type="share" class="weui-btn weui-btn_plain-primary">分享</button>
    
    <!--
     <navigator url="../sportpk/sportpk" open-type="navigate" class="uploader-text">
